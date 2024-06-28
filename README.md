@@ -336,7 +336,7 @@ export const login = (req, res) => {
 
 Finalizando os testes do back-end no Thunder Client, foi adicionada a requisição POST `http://localhost:8001/api/auth/login`  que retorna com sucesso a mensagem “Usuário Logado com sucesso!” e o “token” e “refreshToken” para autenticações.
 
-# Página de login (Front-End)
+## Página de login (Front-End)
 
 Primeiramente foram executados os comandos abaixo para instalação do Next:
 ```
