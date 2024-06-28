@@ -2,7 +2,7 @@
 
 ## Página de Login (Back-End)
 
-Vamos criar uma página de login para clientes da agência de viagens France Viagens, utilizando as tecnologias Node.js, Next.js, Tailwind, MySQL e AWS.
+Vamos criar uma página de login para clientes da agência de viagens France Viagens, utilizando as tecnologias Node.js, Next.js, Tailwind e MySQL.
 
 Utilizando o VSCode, foi criado o repositório france_viagens com duas subpastas chamadas api e cliente, onde em `france_viagens/api` será armazenado o back-end com node.js e em `france_viagens/cliente` o front-end com Next.js.
 
