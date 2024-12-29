@@ -1,12 +1,23 @@
-# France Viagens
+# Login-Node-Next-Tailwind-MySQL
 
-## Página de Login (Back-End)
+## Login Page (Back-End)
 
-Vamos criar uma página de login para clientes da agência de viagens France Viagens, utilizando as tecnologias Node.js, Next.js, Tailwind e MySQL.
+We will create a login page for customers of the travel agency **France Viagens**, using technologies such as Node.js, Next.js, Tailwind, and MySQL.
 
-Utilizando o VSCode, foi criado o repositório france_viagens com duas subpastas chamadas api e cliente, onde em `france_viagens/api` será armazenado o back-end com node.js e em `france_viagens/cliente` o front-end com Next.js.
+Using **VSCode**, a repository named `france_viagens` was created with two subfolders: `api` and `cliente`. In `france_viagens/api`, the back-end built with Node.js will be stored, while `france_viagens/cliente` will house the front-end built with Next.js.
 
-Utilizando o terminal do VSCode, foi executado as seguintes linhas de comando no caminho `france_viagens/api` para inicialização do `package.json`, instalação das bibliotecas e dependências necessárias, tais como a conexão com banco de dados:
+From the **VSCode terminal**, the following commands were executed in the `france_viagens/api` directory to initialize the `package.json` file, install libraries, and required dependencies, including database connection:
+
+```bash
+# Navigate to the 'api' directory
+cd france_viagens/api
+
+# Initialize package.json
+npm init -y
+
+# Install required dependencies
+npm install express mysql dotenv
+```
 
 ```bash
 npm init
@@ -14,24 +25,25 @@ npm i express bcrypt body-parser cors dotenv jsonwebtoken mysql
 npm i --save-dev nodemon
 ```
 
-As bibliotecas são armazenadas no diretório `france_viagens/api/node_modules`, no diretório `france_viagens/api` foi criado o arquivo `index.js` que é o arquivo principal. 
+The libraries are stored in the `france_viagens/api/node_modules` directory. In the `france_viagens/api` directory, the `index.js` file was created as the main file.
 
-Em `package.json` foi realizada a troca da linha 7:
+In the `package.json` file, the modification was made on line 7:
+
 ```javascript
 "test": "echo \"Error: no test specified\" && exit 1"
 ```
 
-Por:
+By:
 ```javascript
  "start": "nodemon index.js"
 ```
 
-Foi adicionado também em package.json na última linha, com o objetivo de facilitar os imports:
+It was also added to the `package.json` file on the last line, with the purpose of simplifying imports:
 ```javascript
 "type": "module"
 ```
 
-Em seguida, em index.js para testar o servidor:
+Next, in `index.js`, to test the server:
 ```javascript
 import express from "express";
 
@@ -42,9 +54,10 @@ app.listen(8001, () => {
 });
 ```
 
-No prompt de comando para confirmar o funcionamento: `npm start`
+In the command prompt, to confirm functionality: `npm start`
 
-Para criação das rotas foi criado o diretório `france_viagens/api/routes` e arquivo user.js
+To create the routes, the directory `france_viagens/api/routes` was created, along with the file `user.js`.
+
 ```
 import express from "express";
 import { getUser } from "../controllers/users.js";
@@ -56,14 +69,14 @@ router.get("/teste", getUser);
 export default router;
 ```
 
-E também foi adicionado o diretório france_viagens/api/controllers e arquivo users.js
+The directory `france_viagens/api/controllers` was also added, along with the file `users.js`.
 ```
 export const getUser = (req, res)=>{
     res.status(200).json({msg: "funcionando!!!"})
 }
 ```
 
-Ao adicionar a rota do user.js no index.js temos:
+When adding the `user.js` route to `index.js`, we have:
 ```
 import express from "express";
 import userRouter from "./routes/user.js";
@@ -77,16 +90,18 @@ app.listen(8001, () => {
 });
 ```
 
-Utilizando o Thunder Client como extensão do VS Code, foi criado uma collection chamada france-viagens e na mesma adicionada a requisição GET `http://localhost:8001/api/user/teste`
+Using **Thunder Client** as a VS Code extension, a collection named `france-viagens` was created, and within it, the GET request `http://localhost:8001/api/user/teste` was added.
 
-Que retornou a seguinte Resposta confirmando o funcionamento da requisição:
+The following response was returned, confirming the functionality of the request:
+
 ```
 {
   "msg": "funcionando"
 }
 ```
 
-Em seguida, utilizando o XAMPP foi criado o banco de dados pelo MySQL e comando:
+Next, using **XAMPP**, the database was created via MySQL with the following command:
+
 ```SQL
 CREATE DATABASE france_viagens;
 USE france_viagens;
@@ -100,7 +115,8 @@ CREATE TABLE `france_viagens`.`user`(
 ) AUTO_INCREMENT=1;
 ```
 
-Em seguida, foi criado o arquivo das autenticações france_viagens/api/routes/auth.js para o registro dos logins
+Next, the authentication file `france_viagens/api/routes/auth.js` was created for login registration.
+
 ```javascript
 import express from "express"
 import {register} from "../controllers/auth.js"
@@ -114,7 +130,8 @@ router.post("/login", login)
 export default router;
 ```
 
-E também o arquivo controller das autenticações france_viagens/api/controllers/auth.js
+The authentication controller file `france_viagens/api/controllers/auth.js` was also created.
+
 ```javascript
 export const register = (req, res) => {
 
@@ -125,7 +142,8 @@ export const login = (req, res) => {
 }
 ```
 
-Em seguida, para resguardar o sigilo dos dados de conexão com o banco de dados foi criado o arquivo .env e .gitignore, e para conexão com o banco foi criado o arquivo france_viagens/api/connect.js
+Next, to safeguard the confidentiality of database connection data, the `.env` and `.gitignore` files were created. Additionally, the file `france_viagens/api/connect.js` was created for database connection.
+
 ```javascript
 import mysql from "mysql";
 import dotenv from "dotenv";
@@ -140,7 +158,8 @@ export const db = mysql.createConnection({
 });
 ```
 
-Posteriormente, foi completado o export const register no auth.js do controllers, com as validações dos dados e criptografia da senha password
+Subsequently, the `export const register` in `auth.js` within the controllers was completed, including data validation and password encryption.
+
 ```javascript
 import { db } from "../connect.js";
 import bcrypt from "bcrypt";
@@ -202,7 +221,8 @@ export const login = (req, res) => {
 }
 ```
 
-Atualizando o index.js com as rotas user.js e auth.js, adicionando também bodyParser para facilitar os testes no Thunder Client, temos então:
+Updating `index.js` with the `user.js` and `auth.js` routes, and also adding `bodyParser` to facilitate testing with Thunder Client, we then have:
+
 ```javascript
 import express from "express";
 import userRouter from "./routes/user.js";
@@ -227,8 +247,7 @@ app.listen(8001, () => {
 });
 ```
 
-Testando novamente no Thunder Client foi adicionada a requisição POST http://localhost:8001/api/auth/register
-Utilizando Form Encoded:
+Testing again in Thunder Client, the POST request `http://localhost:8001/api/auth/register` was added using Form Encoded:
 ```
 {
   "msg": "O nome é obrigatório!"
@@ -258,17 +277,20 @@ confirmPassword teste123456
   "msg": "Cadastro efetuado com sucesso!"
 }
 ```
-Caso tente cadastrar um email já registado:
+If you attempt to register an already registered email:
+
 ```
 {
   "msg": "Este email já está sendo utilizado"
 }
 ```
 
-Foi criada duas chaves criptografadas (REFRESH e TOKEN) para proteção dos dados utilizando o comando abaixo no prompt de comando no diretório api:
+Two encrypted keys (REFRESH and TOKEN) were created for data protection using the following command in the command prompt within the `api` directory:
+
 `node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"`
 
-Em seguida foi desenvolvido no auth.js do controllers a parte do login:
+Next, the login functionality was developed in `auth.js` within the controllers:
+
 ```javascript
 export const login = (req, res) => {
     const { email, password } = req.body;
@@ -334,11 +356,12 @@ export const login = (req, res) => {
 }
 ```
 
-Finalizando os testes do back-end no Thunder Client, foi adicionada a requisição POST `http://localhost:8001/api/auth/login`  que retorna com sucesso a mensagem “Usuário Logado com sucesso!” e o “token” e “refreshToken” para autenticações.
+Completing the back-end tests in Thunder Client, the POST request `http://localhost:8001/api/auth/login` was added, successfully returning the message "User successfully logged in!" along with the "token" and "refreshToken" for authentication.
 
-## Página de login (Front-End)
+## Login Page (Front-End)
 
-Primeiramente foram executados os comandos abaixo para instalação do Next:
+First, the following commands were executed to install Next.js:
+
 ```
 npx create-next-app@latest  
 cd france-viagens
@@ -346,9 +369,10 @@ npm run dev
 npm i axios
 ```
 
-Foram criados os arquivos `client/src/register/page.tsx` e `client/src/login/page.tsc` para as páginas de Registro e Login, respectivamente.
+The files `client/src/register/page.tsx` and `client/src/login/page.tsx` were created for the Registration and Login pages, respectively.
 
-Na página de Login foi utilizada a seguinte lógica de programação para o login do usuário na página:
+The following programming logic was used on the Login page for user login:
+
 ```javascript
 const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -366,9 +390,10 @@ const [email, setEmail] = useState('');
     }
 ```
 
-Foram criados dois componentes `AuthPage.tsx` e `AuthInput.tsx`, armazenados na pasta `client/src/components/AuthPage.tsx`.
+Two components, `AuthPage.tsx` and `AuthInput.tsx`, were created and stored in the `client/src/components/AuthPage.tsx` folder.
 
-Temos na construção do AuthPage a parte da autenticação no front-end:
+In the construction of `AuthPage`, the authentication part for the front-end was implemented:
+
 ```javascript
 function AuthPage({children}:{children:React.ReactNode}) {
     return (
@@ -383,7 +408,8 @@ function AuthPage({children}:{children:React.ReactNode}) {
 export default AuthPage;
 ```
 
-E `AuthInput.tsx` para a entrada da autenticação:
+And `AuthInput.tsx` for authentication input:
+
 ```javascript
 interface AuthInputProps {
     newState: (state:string) => void,
@@ -406,7 +432,7 @@ function AuthInput(props:AuthInputProps) {
 export default AuthInput;
 ```
 
-Em seguida, foi construida a página de Login:
+Next, the Login page was built:
 ```javascript
 "use client"
 
@@ -458,7 +484,8 @@ function Login() {
 export default Login;
 ```
 
-Posteriormente, construída a página de registro:
+Subsequently, the Registration page was built:
+
 ```javascript
 import AuthInput from "@/components/AuthInput";
 import AuthPage from "@/components/AuthPage";
@@ -521,4 +548,5 @@ function Register() {
 export default Register;
 ```
 
-Concluindo assim a página de Login da France Viagens.
+Thus concluding the Login page.
+
